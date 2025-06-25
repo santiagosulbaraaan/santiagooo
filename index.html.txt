@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Barfyt - Nutrición Natural para tu Mascota</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    /* VARIABLES CSS - para manejar colores y fuentes fácilmente */
+    :root {
+      --primary-blue: #2C3E50; /* Azul oscuro principal */
+      --secondary-blue: #3498DB; /* Azul vibrante para acentos */
+      --accent-orange: #E67E22; /* Naranja vibrante para CTA */
+      --light-gray-bg: #ECF0F1; /* Fondo claro */
+      --dark-text: #34495E; /* Texto oscuro */
+      --light-text: #F8F9FA; /* Texto claro */
+      --card-bg: white; /* Fondo de tarjetas */
+      --transition-speed: 0.3s ease;
+      --border-radius-sm: 8px;
+      --border-radius-lg: 50px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif; /* Fuente principal más moderna */
+      background: var(--light-gray-bg);
+      color: var(--dark-text);
+      line-height: 1.6; /* Mejor legibilidad */
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Roboto', sans-serif; /* Fuente de títulos */
+      color: var(--primary-blue);
+      margin-bottom: 1rem;
+    }
+
+    p {
+      margin-bottom: 1rem;
+    }
+
+    /* Utilitarios */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    /* NAVBAR */
+    .navbar-placeholder {
+      height: 80px; /* Asegura el espacio para la barra fija */
+      background-color: transparent; /* Solo para visualización del espacio */
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--card-bg); /* Fondo de la barra */
+      padding: 0.8rem 2rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: all var(--transition-speed);
+      z-index: 1000;
+    }
+
+    .nav-container.sticky {
+      position: fixed;
+      top: 0; /* SE PEGA A LA PARTE SUPERIOR */
+      left: 0; /* Se pega a la izquierda */
+      width: 100%; /* Ocupa el 100% del ancho */
+      border-radius: 0; /* Bordes cuadrados cuando es sticky también */
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2); /* Sombra más pronunciada al ser sticky */
+      padding: 0.8rem 2rem; /* Mantener padding consistente */
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem; /* Más espacio entre imagen y texto */
+    }
+    .logo img {
+      height: 45px; /* Icono ligeramente más grande */
+      width: auto;
+      border-radius: var(--border-radius-sm);
+    }
+    .logo span {
+      font-weight: 700;
+      font-size: 1.6rem; /* Texto del logo más grande */
+      color: var(--primary-blue);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem; /* Más espacio entre enlaces */
+      font-weight: 500;
+      margin-left: auto; /* Para empujar los enlaces a la derecha */
+      margin-right: 0;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--dark-text);
+      padding: 0.6rem 1.2rem; /* Más padding para los botones de navegación */
+      border-radius: var(--border-radius-lg); /* Más redondeado */
+      transition: background-color var(--transition-speed), color var(--transition-speed), transform 0.1s ease;
+    }
+    .nav-links a:hover {
+      color: var(--light-text);
+      background-color: var(--secondary-blue);
+      transform: translateY(-2px); /* Pequeño efecto de elevación */
+    }
+    .nav-links a:active {
+      transform: translateY(0);
+    }
+
+    /* Botón general */
+    .btn {
+      background: var(--accent-orange);
+      color: var(--light-text);
+      padding: 1rem 2rem; /* Más grande y llamativo */
+      border: none;
+      border-radius: var(--border-radius-lg);
+      font-weight: 600; /* Más peso */
+      font-size: 1.1rem; /* Texto más grande */
+      cursor: pointer;
+      transition: background-color var(--transition-speed), transform 0.1s ease, box-shadow var(--transition-speed);
+      text-decoration: none; /* Asegura que no tenga subrayado si es un <a> */
+      display: inline-block; /* Permite padding y margin si es un <a> */
+    }
+    .btn:hover {
+      background: #D35400; /* Naranja más oscuro */
+      transform: translateY(-3px); /* Mayor elevación */
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2); /* Sombra más grande */
+    }
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* Estilos específicos para el botón de contacto que ya NO se usará en la barra */
+    /* .nav-container .contact-btn { ... } Ya no es necesario si se quita el botón separado */
+
+
+    /* HEADER */
+    header {
+      background: var(--primary-blue); /* Fondo azul oscuro */
+      color: var(--light-text);
+      padding: 4rem 1rem; /* Más padding */
+      text-align: center;
+      display: flex; /* Usar flexbox para centrar contenido */
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 500px; /* Altura mínima para una sección hero */
+    }
+    header h1 {
+      font-size: 3.5rem; /* Título más grande */
+      margin-bottom: 1.5rem;
+      color: var(--light-text); /* Asegura que el título sea blanco */
+    }
+    header p {
+      font-size: 1.3rem; /* Texto de párrafo más grande */
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      color: var(--light-text);
+    }
+
+    /* SECTIONS GENERAL */
+    section {
+      padding: 4rem 1rem; /* Padding generoso para todas las secciones */
+      text-align: center;
+      /* ESTILOS INICIALES PARA EL EFECTO DE APARICIÓN */
+      opacity: 0;
+      transform: translateY(50px); /* Empieza 50px más abajo */
+      transition: opacity 1s ease-out, transform 1s ease-out; /* Transición larga para suavidad */
+    }
+    /* CLASE QUE SE AÑADE CON JS PARA HACERLAS VISIBLES */
+    section.appear {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    section h2 {
+      font-size: 2.8rem;
+      margin-bottom: 2.5rem;
+      position: relative; /* Para el underline decorativo */
+      display: inline-block; /* Para que el underline no ocupe todo el ancho */
+    }
+    section h2::after {
+      content: '';
+      display: block;
+      width: 80px; /* Longitud del underline */
+      height: 4px;
+      background: var(--secondary-blue); /* Color del underline */
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+
+    /* SECCIÓN PRODUCTOS */
+    #productos {
+      background-color: var(--light-gray-bg);
+    }
+    .productos-grid {
+      display: grid; /* Usar CSS Grid para un layout más robusto */
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Columnas responsivas */
+      gap: 2rem; /* Espacio entre tarjetas */
+      margin-top: 3rem;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--border-radius-sm);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Sombra más definida */
+      padding: 1.5rem;
+      text-align: center; /* Centrar contenido de la tarjeta */
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex; /* Para organizar el contenido verticalmente */
+      flex-direction: column;
+      justify-content: space-between; /* Espacio entre elementos */
+      /* ESTILOS INICIALES PARA EL EFECTO DE APARICIÓN INDIVIDUAL DE TARJETAS */
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* Transición para tarjetas */
+    }
+    /* CLASE QUE SE AÑADE CON JS PARA HACERLAS VISIBLES */
+    .card.appear {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .card:hover {
+      transform: translateY(-8px); /* Elevación al pasar el ratón */
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    .card h3 {
+      font-size: 1.6rem;
+      margin: 1rem 0 0.5rem;
+      color: var(--primary-blue);
+    }
+    .card p {
+      color: #666;
+      font-size: 1rem;
+      flex-grow: 1; /* Para que el párrafo ocupe el espacio disponible */
+    }
+    .card .price {
+      font-weight: 700;
+      font-size: 1.8rem; /* Precio más grande */
+      margin: 1.5rem 0;
+      color: var(--accent-orange);
+    }
+    .card .btn {
+      margin-top: 1rem;
+      width: 100%; /* Botón de comprar ocupa todo el ancho */
+      background: var(--secondary-blue);
+      padding: 0.75rem 1.5rem; /* Ajustar padding para botón en tarjeta */
+      font-size: 1rem;
+      border-radius: var(--border-radius-sm); /* Menos redondeado para botones de tarjeta */
+    }
+    .card .btn:hover {
+      background: #217DBB;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    /* SECCIÓN NOSOTROS (HISTORIA) */
+    .historia {
+      background-color: var(--card-bg);
+      text-align: left; /* Alinea el texto a la izquierda en esta sección */
+    }
+    .historia .container {
+      max-width: 900px; /* Ancho para el contenido de texto */
+    }
+    .historia h2 {
+      text-align: center; /* El título sigue centrado */
+    }
+    .historia p {
+      font-size: 1.1rem;
+      margin-bottom: 1.2rem;
+      color: var(--dark-text);
+    }
+    .equipo {
+      margin-top: 2.5rem;
+      text-align: center;
+      font-style: italic;
+      color: #777;
+      font-size: 1.1rem;
+    }
+
+    /* SECCIÓN LLAMADA A LA ACCIÓN (CTA) */
+    #cta {
+      background-color: var(--secondary-blue); /* Fondo azul vibrante */
+      color: var(--light-text);
+      padding: 5rem 1rem;
+    }
+    #cta h2 {
+      color: var(--light-text);
+      margin-bottom: 1.5rem;
+    }
+    #cta h2::after {
+      background: var(--accent-orange); /* Underline naranja */
+    }
+    #cta p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto 3rem;
+      color: var(--light-text);
+    }
+    #cta .btn {
+      background: var(--primary-blue); /* Botón CTA en azul oscuro */
+      color: var(--light-text);
+    }
+    #cta .btn:hover {
+      background: #1A283C; /* Azul más oscuro al hover */
+    }
+
+    /* FOOTER */
+    footer {
+      background-color: var(--primary-blue);
+      color: var(--light-text);
+      padding: 3rem 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    footer .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: flex-start;
+      max-width: 1000px;
+      margin: 0 auto 2rem;
+      text-align: left;
+    }
+    footer .footer-section {
+      flex: 1;
+      min-width: 200px; /* Para que no se apilen demasiado */
+      margin: 1rem;
+    }
+    footer .footer-section h4 {
+      color: var(--secondary-blue); /* Títulos de sección en azul vibrante */
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      border-bottom: 2px solid var(--secondary-blue);
+      padding-bottom: 0.5rem;
+      display: inline-block; /* Para que el borde no ocupe todo el ancho */
+    }
+    footer .footer-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    footer .footer-section ul li {
+      margin-bottom: 0.8rem;
+    }
+    footer .footer-section ul li a {
+      color: var(--light-text);
+      text-decoration: none;
+      transition: color var(--transition-speed);
+    }
+    footer .footer-section ul li a:hover {
+      color: var(--secondary-blue);
+    }
+    footer .social-icons a {
+      color: var(--light-text);
+      font-size: 1.5rem;
+      margin: 0 0.8rem;
+      transition: color var(--transition-speed);
+    }
+    footer .social-icons a:hover {
+      color: var(--secondary-blue);
+    }
+    footer .copyright {
+      margin-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 1.5rem;
+      text-align: center;
+    }
+
+    /* RESPONSIVE DESIGN BÁSICO */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none; /* Ocultar enlaces en móviles, se necesitaría un menú hamburguesa */
+      }
+      .logo span {
+        font-size: 1.2rem;
+      }
+      .logo img {
+        height: 35px;
+      }
+      header h1 {
+        font-size: 2.5rem;
+      }
+      header p {
+        font-size: 1rem;
+      }
+      .productos-grid {
+        grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+      }
+      section {
+        padding: 2rem 1rem;
+      }
+      section h2 {
+        font-size: 2rem;
+      }
+      footer .footer-content {
+        flex-direction: column;
+        align-items: center;
+      }
+      footer .footer-section {
+        margin: 1rem 0;
+        width: 100%;
+        text-align: center;
+      }
+      /* .nav-container .contact-btn { display: none; } ya no es necesario si se quita el botón */
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar-placeholder"></div>
+
+  <div class="nav-container" id="mainNavbar">
+    <div class="logo">
+      <img src="{{ url_for('static', filename='images/logo-barfy.jpg') }}" alt="Logo Barfy Pets" />
+      <span>Barfy Pets</span>
+    </div>
+    <div class="nav-links">
+      <a href="#inicio">Inicio</a>
+      <a href="#productos">Productos</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#contacto">Contacto</a> </div>
+    </div>
+
+  <main>
+    <header id="inicio">
+      <div class="container">
+        <h1>Nutrición Superior para una Vida Extraordinaria</h1>
+        <p>En Barfyt, fusionamos la ciencia y la naturaleza para ofrecer alimentos y suplementos que elevan la salud, el bienestar y la vitalidad de tus compañeros más leales. Descubre el poder de una nutrición auténtica.</p>
+        <a href="#productos" class="btn">Explorar Productos</a>
+      </div>
+    </header>
+
+    <section id="productos" class="animate-on-scroll">
+      <div class="container">
+        <h2>Nuestros Productos Destacados</h2>
+        <div class="productos-grid">
+          <div class="card animate-on-scroll">
+            <h3>🌿 Alimento Seco Premium</h3>
+            <p>Formulado con ingredientes naturales y esenciales para la energía y un pelaje brillante.</p>
+            <div class="price">$35.99</div>
+            <button class="btn">Comprar Ahora</button>
+          </div>
+          <div class="card animate-on-scroll" style="transition-delay: 0.1s;">
+            <h3>🍖 Snacks Naturales de Res</h3>
+            <p>Deliciosos y nutritivos, ideales para recompensar y cuidar su digestión.</p>
+            <div class="price">$12.50</div>
+            <button class="btn">Comprar Ahora</button>
+          </div>
+          <div class="card animate-on-scroll" style="transition-delay: 0.2s;">
+            <h3>🦴 Suplemento Articular Avanzado</h3>
+            <p>Apoyo vital para la movilidad, fuerza ósea y flexibilidad en todas las edades.</p>
+            <div class="price">$28.00</div>
+            <button class="btn">Comprar Ahora</button>
+          </div>
+          <div class="card animate-on-scroll" style="transition-delay: 0.3s;">
+            <h3>🐠 Aceite de Salmón Omega-3</h3>
+            <p>Promueve la salud cerebral, cardiovascular y una piel sana.</p>
+            <div class="price">$19.99</div>
+            <button class="btn">Comprar Ahora</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="historia animate-on-scroll" id="nosotros">
+      <div class="container">
+        <h2>Nuestra Historia y Compromiso con la Excelencia</h2>
+        <p>En Barfyt, nuestra profunda pasión por las mascotas es el motor de todo lo que hacemos. Creemos firmemente que una nutrición excepcional es la base para una vida plena, feliz y llena de vitalidad para cada animal. Nuestra dedicación se refleja en cada ingrediente, cada fórmula y cada sonrisa canina o felina que vemos.</p>
+        <p>La aventura de Barfyt comenzó con una simple pero poderosa observación: la carencia de opciones de alimentación verdaderamente saludables en el mercado, repletas de rellenos innecesarios y aditivos artificiales. Impulsados por el amor hacia nuestros propios compañeros peludos y el deseo de ofrecerles lo mejor, nos embarcamos en la misión de crear alternativas que no solo fueran nutritivas, sino también deliciosas y éticamente producidas. Así nació Barfyt, un compromiso con la pureza y la calidad.</p>
+        <p>Colaboramos estrechamente con un equipo de veterinarios, nutricionistas animales y expertos en bienestar para garantizar que cada producto Barfyt no solo cumpla, sino que supere los estándares más exigentes. Desde la selección de materias primas hasta el proceso de empaque, cada paso está diseñado para preservar la integridad nutricional y el sabor, asegurando que tu mascota reciba el alimento más puro y beneficioso. Estamos aquí para nutrir a tu mejor amigo, ¡por una vida llena de ladridos alegres y ronroneos satisfechos!</p>
+        <div class="equipo">🐾 El Equipo Apasionado de Barfyt</div>
+      </div>
+    </section>
+
+    <section id="cta" class="animate-on-scroll">
+      <div class="container">
+        <h2>Únete a la Familia Barfyt</h2>
+        <p>Descubre cómo una nutrición de calidad puede transformar la vida de tu mascota. Miles de dueños ya confían en nosotros para el bienestar de sus seres queridos.</p>
+        <a href="#productos" class="btn">Ver Todos los Productos</a>
+      </div>
+    </section>
+
+    <section id="contacto" class="animate-on-scroll">
+        <div class="container">
+            <h2>¿Tienes Preguntas? Contáctanos</h2>
+            <p>Estamos aquí para ayudarte. Si tienes dudas sobre nuestros productos o la nutrición de tu mascota, no dudes en escribirnos.</p>
+            <form action="#" method="POST" style="max-width: 500px; margin: 2rem auto; text-align: left;">
+                <p>
+                    <label for="name">Nombre:</label><br>
+                    <input type="text" id="name" name="name" required style="width: 100%; padding: 0.8rem; margin-top: 0.5rem; border: 1px solid #ccc; border-radius: 5px;">
+                </p>
+                <p>
+                    <label for="email">Email:</label><br>
+                    <input type="email" id="email" name="email" required style="width: 100%; padding: 0.8rem; margin-top: 0.5rem; border: 1px solid #ccc; border-radius: 5px;">
+                </p>
+                <p>
+                    <label for="message">Mensaje:</label><br>
+                    <textarea id="message" name="message" rows="5" required style="width: 100%; padding: 0.8rem; margin-top: 0.5rem; border: 1px solid #ccc; border-radius: 5px;"></textarea>
+                </p>
+                <button type="submit" class="btn" style="width: auto; margin-top: 1rem; display: block;">Enviar Mensaje</button>
+            </form>
+        </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <div class="footer-section about">
+        <h4>Sobre Barfyt</h4>
+        <p>Comprometidos con la salud y felicidad de tus mascotas a través de una nutrición natural y de alta calidad.</p>
+      </div>
+      <div class="footer-section links">
+        <h4>Enlaces Rápidos</h4>
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#productos">Productos</a></li>
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-section contact">
+        <h4>Contáctanos</h4>
+        <p>Email: info@barfyt.com</p>
+        <p>Tel: +123 456 7890</p>
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook"><span style="font-size: 1.2em;">f</span></a>
+          <a href="#" aria-label="Instagram"><span style="font-size: 1.2em;">&#x1F4F7;</span></a>
+          <a href="#" aria-label="Twitter"><span style="font-size: 1.2em;">t</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="copyright">
+      &copy; 2025 Barfyt. Todos los derechos reservados.
+    </div>
+  </footer>
+
+  <script>
+    // === Scroll-Hide/Show Navbar Logic ===
+    const navbar = document.getElementById('mainNavbar');
+    const navbarPlaceholder = document.querySelector('.navbar-placeholder');
+    let lastScrollY = window.pageYOffset; // Guarda la última posición de scroll
+    let stickyPoint;
+
+    // Función para actualizar el stickyPoint (punto donde la navbar se vuelve fija)
+    function updateStickyPoint() {
+        if (navbarPlaceholder) {
+            stickyPoint = navbarPlaceholder.offsetTop;
+        }
+    }
+
+    // Llama a la función al cargar la página y al redimensionar
+    window.addEventListener('load', updateStickyPoint);
+    window.addEventListener('resize', updateStickyPoint);
+
+    window.addEventListener('scroll', function() {
+      const currentScrollY = window.pageYOffset;
+
+      // Primero, maneja la lógica de "sticky"
+      if (currentScrollY > stickyPoint) {
+        navbar.classList.add('sticky');
+      } else {
+        navbar.classList.remove('sticky');
+        // Cuando no es sticky, asegúrate de que siempre esté visible
+        navbar.style.transform = 'translateY(0)';
+      }
+
+      // Luego, maneja la lógica de ocultar/mostrar al scroll
+      // Solo aplica esto si la navbar ya es sticky para evitar movimientos indeseados al inicio
+      if (navbar.classList.contains('sticky')) {
+        if (currentScrollY > lastScrollY && currentScrollY > navbar.offsetHeight) {
+          // Scroll hacia abajo y ya hemos pasado la altura de la navbar
+          navbar.style.transform = 'translateY(-100%)'; // Oculta la navbar completamente
+        } else if (currentScrollY < lastScrollY) {
+          // Scroll hacia arriba
+          navbar.style.transform = 'translateY(0)'; // Muestra la navbar
+        }
+      }
+
+      lastScrollY = currentScrollY; // Actualiza la última posición de scroll
+    });
+
+
+    // === Scroll Reveal Animation Logic (Intersection Observer) ===
+    const sectionsToAnimate = document.querySelectorAll('section.animate-on-scroll');
+    const cardsToAnimate = document.querySelectorAll('.card.animate-on-scroll');
+
+    const observerOptions = {
+      root: null, // viewport
+      rootMargin: '0px',
+      threshold: 0.15 // El elemento es visible en un 15% para activar la animación
+    };
+
+    const sectionObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('appear');
+          observer.unobserve(entry.target); // Dejar de observar una vez que ha aparecido
+        }
+      });
+    }, observerOptions);
+
+    const cardObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('appear');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Observar las secciones
+    sectionsToAnimate.forEach(section => {
+      sectionObserver.observe(section);
+    });
+
+    // Observar las tarjetas
+    cardsToAnimate.forEach(card => {
+      cardObserver.observe(card);
+    });
+
+  </script>
+
+</body>
+</html>
